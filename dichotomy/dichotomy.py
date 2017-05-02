@@ -10,9 +10,11 @@ class Dichotomy:
     def get_value(parameter):
         return math.sin(parameter) - math.pow(parameter, 2) / 4
 
-    def scope_calculate(self, left, right, precise):
+    def scope_calculate(self, left, right, precision, show=True):
         middle = (left + right) / 2
-        while math.fabs(self.get_value(middle)) > math.fabs(precise):
+        while math.fabs(self.get_value(middle)) > math.fabs(precision):
+            if show:
+                print(self.get_value(middle))
             if self.get_value(middle) * self.get_value(left) < 0:
                 right = middle
             else:
@@ -20,7 +22,7 @@ class Dichotomy:
             middle = (left + right) / 2
         return middle
 
-    def calculate(self, left, right, precise, step):
+    def calculate(self, left, right, precision, step):
         begin = left
         while begin < right:
             if begin + step < right:
@@ -28,7 +30,7 @@ class Dichotomy:
             else:
                 end = right
             if self.get_value(begin) * self.get_value(end) < 0:
-                self.result.append(self.scope_calculate(begin, end, precise))
+                self.result.append(self.scope_calculate(begin, end, precision))
             if begin + step < right:
                 begin = begin + step
             else:
@@ -37,5 +39,5 @@ class Dichotomy:
 
 if __name__ == "__main__":
     di = Dichotomy()
-    di.calculate(-100, 200, 0.01, 0.5)
+    di.calculate(-100, 200, 0.001, 0.5)
     print(di.result)
