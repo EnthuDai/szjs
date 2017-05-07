@@ -14,8 +14,12 @@ class GaoSi:
     is_liezhuyuan: 是否采用列主元
     """
 
-    def sequence(self, is_liezhuyuan=False):
-        print("--顺序消元--")
+    def sequence(self, is_liezhuyuan=False, show=False):
+        if not is_liezhuyuan:
+            print("--顺序消元--")
+        else:
+            print("--列主元消元--")
+        count = 1
         for i in range(0, self.matrix.rows):
             if is_liezhuyuan:
                 max_num = abs(self.matrix.get(i, i))
@@ -29,7 +33,10 @@ class GaoSi:
                 if abs(self.matrix.get(i, i)) >= 0.000001:
                     m = self.matrix.get(j, i) / self.matrix.get(i, i)
                     self.matrix.rows_operate(j, '-', i, m)
-                    self.matrix.output()
+                    if show:
+                        print("第", count, "次消元结果：")
+                        self.matrix.output()
+                        count += 1
                     print()
                 else:
                     print("det A=0,无解")
@@ -47,8 +54,12 @@ class GaoSi:
 
 
 if __name__ == "__main__":
-    gao_si = GaoSi(1)
-    gao_si.sequence(True)
+    gao_si = GaoSi(3)
+
+    print("增广矩阵为")
+    gao_si.matrix.output()
+
+    gao_si.sequence(True, True)
 
     print("消元结果为")
     gao_si.matrix.output()

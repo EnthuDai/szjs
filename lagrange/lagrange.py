@@ -1,6 +1,7 @@
 #  拉格朗日差值多项式
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 
 class Lagrange:
@@ -31,17 +32,27 @@ class Lagrange:
 
 
 if __name__ == "__main__":
-    key = [0.1, 0.2, 0.3, 0.4, 0.5]
-    value = [1.1052, 1.2214, 1.3499, 1.4918, 1.6487]
-    lag = Lagrange(key, value, 1, 2)
-    print(lag.calculate(0.285))
-    t = np.arange(0.1, 0.6, 0.01)
+    key = [1, 2, 3, 4, 5]
+    value = [math.sin(1), math.sin(2), math.sin(3), math.sin(4), math.sin(5)]
+    lag = Lagrange(key, value, 1, 3)
+    print(lag.calculate(2.5))
 
-    lag = Lagrange(key, value, 1, 2)
-
+    t = np.arange(-0.5, 8, 0.1)
+    data = []
+    for item in t:
+        data.append(math.sin(item))
     # red dashes, blue squares and green triangles
-    plt.plot(t, np.math.e ** t, 'g', t, lag.getValueArray(t), 'r')
-    l = plt.axvline(x=0.2, ymin=0, linewidth=1, color='b', ls='--')
-    l = plt.axvline(x=0.3, ymin=0, linewidth=1, color='b', ls='--')
-    plt.show()
+    plt.plot(t, data, label="sin(x)", color="green", linewidth=1)
+    plt.plot(t, lag.getValueArray(t), 'r', label="pao wu")
+    plt.axvline(x=2, ymin=0, ymax=4, linewidth=1, color='b', ls='--')
+    plt.axvline(x=3, ymin=0, ymax=9, linewidth=1, color='b', ls='--')
+    plt.axvline(x=4, ymin=0, ymax=9, linewidth=1, color='b', ls='--')
+    plt.axvline(x=2.5, ymin=0, ymax=9, linewidth=1, color='y', ls='--')
+    plt.axhline(y=0, linewidth=1)
 
+    # Y轴的范围
+    plt.ylim(-1.2, 1.2)
+
+    # 显示图示
+    plt.legend()
+    plt.show()
