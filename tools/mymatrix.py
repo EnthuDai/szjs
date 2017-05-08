@@ -8,7 +8,9 @@ class MyMatrix:
         self.data = []
         self.rows = 0
         self.columns = 0
-        if index == 0:
+        if index == -1:
+            pass
+        elif index == 0:
             self.input()
         elif index == 1:
             self.rows = 3
@@ -132,10 +134,57 @@ class MyMatrix:
             self.data[row1 * self.columns + i] = self.data[row2 * self.columns + i]
             self.data[row2 * self.columns + i] = tmp
 
+    """两个矩阵相乘"""
+
+    @staticmethod
+    def multiply(matrix1, matrix2):
+        if not (isinstance(matrix1, MyMatrix) and isinstance(matrix2, MyMatrix)):
+            raise Exception("非矩阵类型无法相乘")
+        if matrix1.columns != matrix2.rows:
+            raise Exception("此两个矩阵无法相乘")
+        data = [0]*matrix1.rows*matrix2.columns
+        for i in range(0, matrix2.columns):
+            for j in range(0, matrix1.rows):
+                tmp = 0
+                for k in range(0, matrix1.columns):
+                    tmp += matrix1.get(j, k)*matrix2.get(k, i)
+                data[j*matrix2.columns+i] = tmp
+        result = MyMatrix(-1)
+        result.data = data
+        result.rows = matrix1.rows
+        result.columns = matrix2.columns
+        return result
+
+    """矩阵加法"""
+    @staticmethod
+    def add(matrix1, matrix2):
+        if matrix1.columns != matrix2.columns:
+            raise Exception("加法操作--矩阵列数不同")
+        if matrix1.rows != matrix2.rows:
+            raise Exception("加法操作--矩阵行数不同")
+        result = MyMatrix(-1)
+        result.rows = matrix2.rows
+        result.columns = matrix2.columns
+        data = [0]*matrix2.columns*matrix2.rows
+        for i in range(0, matrix2.rows*matrix1.columns):
+            data[i] = matrix1.data[i] + matrix2.data[i]
+        result.data = data
+        return result
 
 if __name__ == "__main__":
-    mat = MyMatrix(2)
-    mat.output()
-    print()
-    mat.rows_change(1, 2)
-    mat.output()
+    matrix = MyMatrix(-1)
+    matrix.columns = 2
+    matrix.rows = 2
+    matrix.data = [0, -2, -3, 0]
+
+    matrix2 = MyMatrix(-1)
+    matrix2.columns = 1
+    matrix2.rows = 2
+    matrix2.data = [0, 0]
+
+    matrix3 = MyMatrix(-1)
+    matrix3.columns = 1
+    matrix3.rows = 2
+    matrix3.data = [5, 5]
+
+    MyMatrix.add(MyMatrix.multiply(matrix, matrix2), matrix3).output()
