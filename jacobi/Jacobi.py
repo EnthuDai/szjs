@@ -36,12 +36,12 @@ class Jacobi:
 
 if __name__ == "__main__":
     xishu = MyMatrix(-1)
-    xishu.data = [0, -1/3, -1/2, 0]
+    xishu.data = [0, -2, -3, 0]
     xishu.rows = 2
     xishu.columns = 2
 
     changshu = MyMatrix(-1)
-    changshu.data = [5/3, 5/2]
+    changshu.data = [5, 5]
     changshu.rows = 2
     changshu.columns = 1
 
@@ -51,6 +51,25 @@ if __name__ == "__main__":
     it_num.data = [0, 0]
 
     jac = Jacobi(2, xishu, changshu)
-    result = jac.calculate(it_num, 0.001,True)
+    result = jac.calculate(it_num, 0.001, True)
     print("最终结果为：", result.data)
+
+    # xishu = MyMatrix(-1)
+    # xishu.data = [0, 1, -1/2, -1/3, 0, 2/3, -1, -1, 0]
+    # xishu.rows = 3
+    # xishu.columns = 3
+    #
+    # changshu = MyMatrix(-1)
+    # changshu.data = [1/2, 1/3, 6]
+    # changshu.rows = 3
+    # changshu.columns = 1
+    #
+    # it_num = MyMatrix(-1)
+    # it_num.columns = 1
+    # it_num.rows = 3
+    # it_num.data = [0, 0, 0]
+    #
+    # jac = Jacobi(3, xishu, changshu)
+    # result = jac.calculate(it_num, 0.001, True)
+    # print("最终结果为：", result.data)
 
