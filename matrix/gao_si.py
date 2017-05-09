@@ -4,8 +4,8 @@ from tools.mymatrix import MyMatrix
 
 
 class GaoSi:
-    def __init__(self, index=0):
-        self.matrix = MyMatrix(index)
+    def __init__(self, matrix):
+        self.matrix = matrix
         self.rows = self.matrix.rows
         self.columns = self.matrix.columns
         self.result = []
@@ -15,10 +15,11 @@ class GaoSi:
     """
 
     def sequence(self, is_liezhuyuan=False, show=False):
-        if not is_liezhuyuan:
-            print("--顺序消元--")
-        else:
-            print("--列主元消元--")
+        if show:
+            if not is_liezhuyuan:
+                print("--顺序消元--")
+            else:
+                print("--列主元消元--")
         count = 1
         for i in range(0, self.matrix.rows):
             if is_liezhuyuan:
@@ -54,7 +55,9 @@ class GaoSi:
 
 
 if __name__ == "__main__":
-    gao_si = GaoSi(3)
+    matrix = MyMatrix(3)
+
+    gao_si = GaoSi(matrix)
 
     print("增广矩阵为")
     gao_si.matrix.output()
